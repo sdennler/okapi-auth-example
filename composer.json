@@ -1,0 +1,10 @@
+{
+    "require": {
+        "league/oauth1-client": "^1.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "OkapiAuth\\":"src/"
+        }
+    }
+}

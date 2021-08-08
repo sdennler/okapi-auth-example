@@ -1,0 +1,14 @@
+<?php
+
+return [
+    'opencaching.pl' => [
+        'identifier' => '',
+        'secret' => '',
+        'base_uri' => 'https://opencaching.pl/okapi/',
+    ],
+    'opencaching.de' => [
+        'identifier' => '',
+        'secret' => '',
+        'base_uri' => 'https://opencaching.de/okapi/',
+    ],
+];
