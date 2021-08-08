@@ -9,6 +9,6 @@ return [
     'opencaching.de' => [
         'identifier' => '',
         'secret' => '',
-        'base_uri' => 'https://opencaching.de/okapi/',
+        'base_uri' => 'https://www.opencaching.de/okapi/',
     ],
 ];
