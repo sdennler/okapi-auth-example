@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace OkapiAuth;
 
-use GuzzleHttp\Exception\BadResponseException;
-use League\OAuth1\Client\Credentials\ClientCredentialsInterface;
-use League\OAuth1\Client\Credentials\CredentialsException;
-use League\OAuth1\Client\Credentials\TemporaryCredentials;
 use League\OAuth1\Client\Server\Server;
 use League\OAuth1\Client\Credentials\TokenCredentials;
 use League\OAuth1\Client\Server\User;
@@ -65,48 +61,6 @@ class Okapi extends Server
         parent::__construct($clientCredentials, $signature);
     }
 
-    /**
-     * Gets temporary credentials by performing a request to
-     * the server.
-     *
-     * @return TemporaryCredentials
-     *
-     * @throws CredentialsException
-     */
-    public function getTemporaryCredentialsOFF()
-    {
-        $uri = $this->urlTemporaryCredentials();
-
-        $client = $this->createHttpClient();
-
-        $header = $this->temporaryCredentialsProtocolHeader($uri);
-        var_dump($header);
-        $authorizationHeader = ['Authorization' => $header];
-        $headers = $this->buildHttpClientHeaders($authorizationHeader);
-
-        $parameters = array_merge(
-            $this->baseProtocolParameters(),
-            $this->additionalTemporaryCredentialsProtocolParameters(),
-            [
-                'oauth_callback' => $this->clientCredentials->getCallbackUri(),
-            ]
-        );
-
-        $parameters['oauth_signature'] = $this->signature->sign($uri, $parameters, 'POST');
-        var_dump($parameters);
-
-        try {
-            $response = $client->post($uri, [
-                'query' => $parameters,
-            ]);
-
-            return $this->createTemporaryCredentials((string) $response->getBody());
-        } catch (BadResponseException $e) {
-            $this->handleTemporaryCredentialsBadResponse($e);
-        }
-
-        throw new CredentialsException('Failed to get temporary credentials');
-    }
     /**
      * @inheritDoc
      */
